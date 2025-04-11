@@ -13,10 +13,3 @@ Este é um addon para o [Stremio](https://www.stremio.com/) baseado em torrents,
 - ✅ Integração com IMDb (ID começa com `tt`)
 
 ---
-
-## 🚀 Como rodar localmente
-
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/DavidZeraYT/torrentio-clone.git
-   cd torrentio-clone
