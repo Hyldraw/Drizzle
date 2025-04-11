@@ -1,8 +1,9 @@
+const express = require('express');
 const { addonBuilder } = require("stremio-addon-sdk");
 const TorrentSearchApi = require("torrent-search-api");
 
-// Ativando providers públicos (YTS, 1337x, etc.)
-TorrentSearchApi.enablePublicProviders();
+const app = express();
+const PORT = process.env.PORT || 7000; // Porta do Render ou padrão (7000)
 
 const manifest = {
   id: "community.torrentio.clone",
@@ -11,7 +12,7 @@ const manifest = {
   description: "Addon de torrents com suporte para filmes e séries em português e inglês",
   resources: ["stream"],
   types: ["movie", "series"],
-  idPrefixes: ["tt"], // IMDb ID
+  idPrefixes: ["tt"], 
   catalogs: [],
   logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Logo_Torrent.png",
   behaviorHints: {
@@ -25,14 +26,11 @@ const builder = new addonBuilder(manifest);
 builder.defineStreamHandler(async ({ type, id }) => {
   if (!id.startsWith("tt")) return { streams: [] };
 
-  // Busca pelo IMDb ID
   let query = id;
 
   try {
-    // Busca até 30 resultados de torrents
     const results = await TorrentSearchApi.search(query, type === "series" ? "TV" : "Movies", 30);
 
-    // Filtrar torrents por idioma e qualidade
     const filtered = results.filter(torrent => {
       const title = torrent.title.toLowerCase();
       const is720 = title.includes("720p");
@@ -45,12 +43,8 @@ builder.defineStreamHandler(async ({ type, id }) => {
 
     const streams = filtered.map((torrent) => {
       const title = torrent.title;
-      const size = torrent.size || "unknown size";
       const quality = title.includes("1080p") ? "1080p" : "720p";
-      const lang =
-        title.includes("pt") || title.includes("portugues") || title.includes("dual")
-          ? "PT"
-          : "EN";
+      const lang = title.includes("pt") || title.includes("portugues") || title.includes("dual") ? "PT" : "EN";
 
       return {
         name: `[${lang}] ${quality} - ${title}`,
@@ -67,4 +61,9 @@ builder.defineStreamHandler(async ({ type, id }) => {
   }
 });
 
-module.exports = builder.getInterface();
+app.use("/", builder.getInterface());
+
+app.listen(PORT, () => {
+  console.log(`Addon rodando na porta ${PORT}`);
+});
+
