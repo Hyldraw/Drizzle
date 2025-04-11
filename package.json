@@ -1,0 +1,15 @@
+{
+  "name": "torrentio-clone",
+  "version": "1.0.0",
+  "description": "Addon para Stremio baseado em torrents (PT/EN) com suporte a filmes e séries em 720p e 1080p",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Hyldraw",
+  "license": "MIT",
+  "dependencies": {
+    "stremio-addon-sdk": "^1.0.0",
+    "torrent-search-api": "^2.1.4"
+  }
+}
