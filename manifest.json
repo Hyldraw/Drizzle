@@ -1,0 +1,15 @@
+{
+  "id": "community.torrentio.clone",
+  "version": "1.0.0",
+  "name": "Torrentio Clone (PT/EN)",
+  "description": "Addon de torrents com suporte para filmes e séries em português e inglês",
+  "resources": ["stream"],
+  "types": ["movie", "series"],
+  "idPrefixes": ["tt"],
+  "catalogs": [],
+  "logo": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Logo_Torrent.png",
+  "behaviorHints": {
+    "configurationRequired": false,
+    "configurable": false
+  }
+}
